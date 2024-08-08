@@ -3,9 +3,15 @@ import pickle
 import os
 
 # Load your trained model
-model_path = os.path.join(os.path.expanduser('~'), 'Downloads', 'water_potabilitys.sav')
-with open(model_path, 'rb') as file:
-    model = pickle.load(file)
+# Use a relative path to load the model file from the same directory as app.py
+model_path = 'water_potabilitys.sav'  # Adjust this if the file is in a different directory
+
+# Check if the model file exists
+if not os.path.isfile(model_path):
+    st.error(f"Model file not found: {model_path}")
+else:
+    with open(model_path, 'rb') as file:
+        model = pickle.load(file)
 
 # Function to predict potability
 def predict_potability(features):
@@ -57,3 +63,4 @@ if st.button("Predict Potability"):
             st.error("Water is Not Potable")
     else:
         st.error("Please ensure all fields contain valid numeric values.")
+
